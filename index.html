@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Xaerth</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+body{
+background:#0b0b12;
+color:#b46cff;
+font-family:'Poppins',sans-serif;
+text-align:center;
+margin-top:120px;
+}
+
+h1{
+font-size:60px;
+letter-spacing:3px;
+}
+
+input{
+padding:12px;
+width:350px;
+border-radius:25px;
+border:none;
+background:#151523;
+color:white;
+font-size:16px;
+}
+
+button{
+margin:10px;
+padding:10px 20px;
+border:none;
+border-radius:20px;
+background:#7b2cff;
+color:white;
+cursor:pointer;
+}
+
+#adminPanel{
+display:none;
+margin-top:30px;
+}
+
+.result{
+margin-top:20px;
+color:white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Xaerth</h1>
+
+<input id="search" placeholder="Buscar en Xaerth...">
+<br>
+<button onclick="buscar()">Buscar</button>
+<button onclick="login()">Modo Admin</button>
+
+<div id="resultado" class="result"></div>
+
+<div id="adminPanel">
+<h2>Panel Admin</h2>
+
+<input id="titulo" placeholder="Nombre">
+<br>
+<input id="contenido" placeholder="Contenido">
+<br>
+<button onclick="guardar()">Guardar dato</button>
+
+</div>
+
+<script>
+
+let datos = JSON.parse(localStorage.getItem("xaerth")) || [];
+
+function guardar(){
+let titulo=document.getElementById("titulo").value;
+let contenido=document.getElementById("contenido").value;
+
+datos.push({titulo,contenido});
+localStorage.setItem("xaerth",JSON.stringify(datos));
+
+alert("Guardado en Xaerth");
+}
+
+function buscar(){
+let texto=document.getElementById("search").value.toLowerCase();
+let resultado="";
+
+datos.forEach(d=>{
+if(d.titulo.toLowerCase().includes(texto)){
+resultado+=`<p><b>${d.titulo}</b>: ${d.contenido}</p>`;
+}
+});
+
+document.getElementById("resultado").innerHTML=
+resultado || "No encontrado en Xaerth";
+}
+
+function login(){
+let clave=prompt("Clave Admin:");
+
+if(clave==="2140"){
+document.getElementById("adminPanel").style.display="block";
+alert("Modo Admin activado");
+}else{
+alert("Clave incorrecta");
+}
+}
+
+</script>
+
+</body>
+</html>
