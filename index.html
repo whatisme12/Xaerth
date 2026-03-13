@@ -1,74 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Xaerth</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 background:#0b0b12;
-color:#b46cff;
-font-family:'Poppins',sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+font-family:'Press Start 2P', cursive;
+}
+
+/* arcade */
+
+.arcade{
+width:320px;
+height:500px;
+background:#1b1b2b;
+border-radius:20px 20px 10px 10px;
+box-shadow:0 0 40px #000;
+position:relative;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding-top:40px;
+}
+
+/* pantalla */
+
+.screen{
+width:260px;
+height:180px;
+background:#050509;
+border:8px solid #333;
+border-radius:10px;
+display:flex;
+justify-content:center;
+align-items:center;
 text-align:center;
-margin-top:120px;
+color:#ff3b3b;
+font-size:14px;
+line-height:1.6;
+box-shadow:0 0 20px #000 inset;
 }
 
-h1{
-font-size:60px;
-letter-spacing:3px;
+/* controles */
+
+.controls{
+position:absolute;
+bottom:40px;
+display:flex;
+gap:20px;
 }
 
-input{
-padding:12px;
-width:350px;
-border-radius:25px;
-border:none;
-background:#151523;
-color:white;
-font-size:16px;
+.button{
+width:30px;
+height:30px;
+background:#ff3b3b;
+border-radius:50%;
+box-shadow:0 0 10px #000;
 }
 
-button{
-margin:10px;
-padding:10px 20px;
-border:none;
-border-radius:20px;
-background:#7b2cff;
-color:white;
-cursor:pointer;
+.joystick{
+width:40px;
+height:40px;
+background:#222;
+border-radius:50%;
+position:relative;
 }
 
-#adminPanel{
-display:none;
-margin-top:30px;
-}
-
-.result{
-margin-top:20px;
-color:white;
-}
-
-/* sugerencias */
-
-#sugerencias{
-width:350px;
-margin:auto;
-background:#151523;
-border-radius:15px;
-margin-top:5px;
-}
-
-.sugerencia{
-padding:10px;
-cursor:pointer;
-color:white;
-}
-
-.sugerencia:hover{
-background:#7b2cff;
+.joystick::after{
+content:"";
+position:absolute;
+width:12px;
+height:35px;
+background:#ff3b3b;
+top:-25px;
+left:14px;
+border-radius:6px;
 }
 
 </style>
@@ -76,84 +91,19 @@ background:#7b2cff;
 
 <body>
 
-<h1>Xaerth</h1>
+<div class="arcade">
 
-<input id="search" placeholder="Buscar en Xaerth..." oninput="sugerir()">
-<div id="sugerencias"></div>
-
-<br>
-
-<button onclick="buscar()">Buscar</button>
-<button onclick="login()">Modo Admin</button>
-
-<div id="resultado" class="result"></div>
-
-<div id="adminPanel">
-<h2>Panel Admin</h2>
-
-<input id="titulo" placeholder="Nombre">
-<br>
-<input id="contenido" placeholder="Contenido">
-<br>
-<button onclick="guardar()">Guardar dato</button>
-
+<div class="screen">
+Fuera de servicio :(
 </div>
 
-<script>
+<div class="controls">
+<div class="joystick"></div>
+<div class="button"></div>
+<div class="button"></div>
+</div>
 
-let datos = JSON.parse(localStorage.getItem("xaerth")) || [];
-
-function guardar(){
-let titulo=document.getElementById("titulo").value;
-let contenido=document.getElementById("contenido").value;
-
-datos.push({titulo,contenido});
-localStorage.setItem("xaerth",JSON.stringify(datos));
-
-alert("Guardado en Xaerth");
-}
-
-function buscar(){
-let texto=document.getElementById("search").value.toLowerCase();
-let resultado="";
-
-datos.forEach(d=>{
-if(d.titulo.toLowerCase().includes(texto)){
-resultado+=`<p><b>${d.titulo}</b>: ${d.contenido}</p>`;
-}
-});
-
-document.getElementById("resultado").innerHTML=
-resultado || "No encontrado en Xaerth";
-}
-
-function login(){
-let clave=prompt("Clave Admin:");
-
-if(clave==="2140"){
-document.getElementById("adminPanel").style.display="block";
-alert("Modo Admin activado");
-}else{
-alert("Clave incorrecta");
-}
-}
-
-function sugerir(){
-let texto=document.getElementById("search").value.toLowerCase();
-let box=document.getElementById("sugerencias");
-
-box.innerHTML="";
-
-if(texto.startsWith("t")){
-box.innerHTML += `
-<div class="sugerencia"
-onclick="window.location.href='https://whatisme12.github.io/xar/'">
-Traductor Xaerth — https://whatisme12.github.io/xar/
-</div>`;
-}
-}
-
-</script>
+</div>
 
 </body>
 </html>
